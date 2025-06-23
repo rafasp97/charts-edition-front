@@ -1,24 +1,31 @@
 <template>
   <div class="generate">
+    <img v-if="isLoading" src="../assets/logo.png" alt="Logo" class="logo"/>
     <div v-if="isLoading">
-        Carregando Charts...
+        Carregando Ranking...
     </div>
-
-    <div v-else class="rank-container">
-        <div class="crown-container">
-            <img src="../assets/crown.png" alt="Logo" class="crown"/>
-            <img src="../assets/crown.png" alt="Logo" class="crown"/>
-            <img src="../assets/crown.png" alt="Logo" class="crown"/>
+    <div  v-else >
+        <div class="rank-container">
+            <div class="crown-container">
+                <img src="../assets/crown.png" alt="Logo" class="crown"/>
+                <img src="../assets/crown.png" alt="Logo" class="crown"/>
+                <img src="../assets/crown.png" alt="Logo" class="crown"/>
+            </div>
+            <table class="rank">
+                <tbody  v-for="(artist, index) in rank" :key="artist.id" >          
+                    <tr>
+                    <td class="other">{{index + 1}}</td>
+                    <td class="name">{{artist.name}}</td>
+                    <td class="other">{{artist.playcount}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <table class="rank">
-            <tbody  v-for="(artist, index) in rank" :key="artist.id" >          
-                <tr>
-                <td class="other">{{index + 1}}</td>
-                <td class="name">{{artist.name}}</td>
-                <td class="other">{{artist.playcount}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div>
+            <chrome-picker :modelValue="color" @update:modelValue="updateColor" />
+            <p>Cor selecionada: {{ color.hex }}</p>
+        </div>
+        <CustomButton action="Gerar Charts" @click="() => this.$router.push({name: 'GenerateCharts'})"></CustomButton>
     </div>
   </div>
 </template>
@@ -28,9 +35,23 @@ import { ref, onMounted } from 'vue';
 import { defineComponent } from 'vue';
 import { Artist } from '@/interfaces/Artist';
 import rankService from '@/services/rankService';
+import CustomButton from '@/components/CustomButton.vue';
+import { Chrome } from '@ckpack/vue-color'
+
 
 export default defineComponent({
   name: 'GenerateCharts',
+  components: {CustomButton,  'chrome-picker': Chrome},
+  data() {
+    return {
+        color: { hex: '#ff0000' }
+    }
+  },
+  methods: {
+    updateColor(newColor: any) {
+        this.color = newColor
+    }
+  },
   setup() {
     const rank = ref<Artist[]>([]);
     const isLoading = ref(true);

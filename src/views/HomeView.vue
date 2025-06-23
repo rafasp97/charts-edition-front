@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img src="../assets/logo.png" alt="Logo" class="logo"/>
-    <CustomButton action="Gerar Charts" @click="() => this.$router.push({name: 'GenerateCharts'})"></CustomButton>
+    <CustomButton action="Iniciar" @click="() => this.$router.push({name: 'GenerateCharts'})"></CustomButton>
   </div>
 </template>
 
