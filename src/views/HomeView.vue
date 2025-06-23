@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <img src="../assets/logo.png" alt="Logo" class="logo"/>
+    <CustomButton action="Gerar Charts" @click="() => this.$router.push({name: 'GenerateCharts'})"></CustomButton>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import CustomButton from '@/components/CustomButton.vue';
 
 export default defineComponent({
   name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
+  components: {CustomButton}
 });
 </script>
+<style>
+  .home{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 4em;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo{
+    width: 15em;
+    height: auto;
+  }
+</style>
