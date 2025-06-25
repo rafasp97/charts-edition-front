@@ -35,7 +35,7 @@
             <CustomButton action="Chique aqui!" @click="openFileDialog" v-if="!imageBase64"></CustomButton>
             <div v-if="imageBase64" class="generated-image">
                 <p>Imagem selecionada com sucesso!</p>
-                <CustomButton action="Gerar Charts" @click="() => chartsService.openCharts(color.hex, imageBase64, rank)"></CustomButton>
+                <CustomButton action="Gerar Charts" @click="openCharts(color.hex, imageBase64, rank)"></CustomButton>
             </div>
         </div>
         <div class="arrow-container">
@@ -53,7 +53,8 @@ import { Artist } from '@/interfaces/Artist';
 import rankService from '@/services/rankService';
 import chartsService from '@/services/chartsService';
 import CustomButton from '@/components/CustomButton.vue';
-import { Chrome } from '@ckpack/vue-color'
+import { Chrome } from '@ckpack/vue-color';
+import axios from 'axios';
 
 
 export default defineComponent({
@@ -118,6 +119,37 @@ export default defineComponent({
         else indice.value = value;
     };
 
+    // Na função chamada direto no clique (sem arrow function que altera o this)
+    async function openCharts(color: string, image: string, rank: Artist[]) {
+    // Abre nova aba imediatamente (sempre retorna uma aba ou null)
+    const newTab = window.open('about:blank', '_blank');
+
+    if (!newTab) {
+        alert('Por favor, permita pop-ups para este site.');
+        return;
+    }
+
+    try {
+        const response = await axios.post('https://charts-edition.onrender.com/main', 
+        { color, image, rank },
+        { responseType: 'blob' }
+        );
+
+        const blob = response.data;
+        const url = URL.createObjectURL(blob);
+
+        // Atualiza a aba aberta
+        newTab.location.href = url;
+
+        // Opcional: liberar URL após um tempo
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+    } catch (error) {
+        newTab.close();
+        console.error(error);
+    }
+    }
+
     return {
         rank,
         isLoading,
@@ -128,7 +160,8 @@ export default defineComponent({
         openFileDialog,
         indice,
         changeIndice,
-        chartsService
+        chartsService,
+        openCharts
     };
   }
 });
