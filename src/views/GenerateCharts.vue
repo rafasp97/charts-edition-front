@@ -35,7 +35,7 @@
             <CustomButton action="Chique aqui!" @click="openFileDialog" v-if="!imageBase64"></CustomButton>
             <div v-if="imageBase64" class="generated-image">
                 <p>Imagem selecionada com sucesso!</p>
-                <CustomButton action="Gerar Charts" @click="() => this.$router.push({name: 'GenerateCharts'})"></CustomButton>
+                <CustomButton action="Gerar Charts" @click="() => chartsService.openCharts(color.hex, imageBase64)"></CustomButton>
             </div>
         </div>
         <div class="arrow-container">
@@ -51,6 +51,7 @@ import { ref, onMounted } from 'vue';
 import { defineComponent } from 'vue';
 import { Artist } from '@/interfaces/Artist';
 import rankService from '@/services/rankService';
+import chartsService from '@/services/chartsService';
 import CustomButton from '@/components/CustomButton.vue';
 import { Chrome } from '@ckpack/vue-color'
 
@@ -117,7 +118,6 @@ export default defineComponent({
         else indice.value = value;
     };
 
-
     return {
         rank,
         isLoading,
@@ -127,7 +127,8 @@ export default defineComponent({
         sevenDaysAgo,
         openFileDialog,
         indice,
-        changeIndice
+        changeIndice,
+        chartsService
     };
   }
 });
