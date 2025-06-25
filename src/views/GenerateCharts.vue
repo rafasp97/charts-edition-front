@@ -35,7 +35,7 @@
             <CustomButton action="Chique aqui!" @click="openFileDialog" v-if="!imageBase64"></CustomButton>
             <div v-if="imageBase64" class="generated-image">
                 <p>Imagem selecionada com sucesso!</p>
-                <CustomButton action="Gerar Charts" @click="() => chartsService.openCharts(color.hex, imageBase64)"></CustomButton>
+                <CustomButton action="Gerar Charts" @click="() => chartsService.openCharts(color.hex, imageBase64, JSON.stringify(rank))"></CustomButton>
             </div>
         </div>
         <div class="arrow-container">
