@@ -1,10 +1,11 @@
+import { Artist } from '@/interfaces/Artist';
 import axios from 'axios';
 
 export default {
-    async openCharts(color:string, image:string, rank:string){
+    async openCharts(color:string, image:string, rank:Artist[]){
         try{
             const response = await axios.post(`https://charts-edition.onrender.com/main`, 
-                { color: color, image: image, rank: rank },
+                { color, image, rank},
                 { responseType: 'blob' }
             );
             const blob = response.data;
