@@ -10,16 +10,9 @@ export default {
             );
             const blob = response.data;
             const url = URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'charts.png';
-            document.body.appendChild(link); // ⬅️ necessário no mobile
-            link.click();
-            document.body.removeChild(link); // limpa após o clique
-            URL.revokeObjectURL(url); // libera memória
+            window.open(url, '_blank');
         } catch(error){
             throw new Error(`Erro: ${error}`);
         }
-    },
+    }
 };
