@@ -215,7 +215,7 @@ export default defineComponent({
         width: 15em;
         flex-direction: row;
         justify-content: space-between;
-        padding: 2em 0em 4em 0em;  
+        padding: 2em 0em 1em 0em;  
         position: absolute;
         bottom: 0;
 
