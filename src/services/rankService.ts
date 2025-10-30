@@ -16,7 +16,7 @@ const users: string[] = [
     'felipetas',
     'vitoriaforttes',
     'fontes_vinicius',
-    'igorsolv'
+    'iigorsolv'
 ];
 
 const artists: Artist[] = [];
